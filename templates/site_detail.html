@@ -1,0 +1,40 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+  <div class="card-header">
+    <div class="card-title">{{ site['name'] }}</div>
+  </div>
+  <div class="small">Customer: {{ customer['name'] }}</div>
+  <h3 class="section-title">Site Information</h3>
+  <div class="small">
+    Well depth: {{ site['well_depth'] }} ft<br>
+    Casing: {{ site['casing_diameter'] }} in<br>
+    Static water: {{ site['static_level'] }} ft<br>
+    Pump: {{ site['pump_info'] }}<br>
+    Electrical: {{ site['electrical_service'] }}
+  </div>
+  <h3 class="section-title">Site Notes</h3>
+  <div class="small">{{ site['notes'] }}</div>
+</section>
+<section class="card">
+  <div class="card-header">
+    <div class="card-title">Jobs at This Site</div>
+  </div>
+  <ul class="list">
+    {% for j in jobs %}
+    <li class="list-item">
+      <a href="{{ url_for('job_detail', job_id=j['id']) }}">
+        <span class="division-pill division-{{ j['division_class'] }}">
+          {{ j['division'] }} {{ j['job_number'] }}
+        </span>
+        &nbsp;{{ j['title'] }}
+      </a>
+      <span class="status-pill status-{{ j['status_class'] }}" style="margin-left:0.3rem;">
+        {{ j['status'] }}{% if j['has_attachments'] %} 📎{% endif %}
+      </span>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endblock %}

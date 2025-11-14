@@ -1,0 +1,36 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section class="card" style="grid-column: 1 / -1;">
+  <div class="card-header">
+    <div class="card-title">Demo Schedule · Jobs Calendar</div>
+  </div>
+  <div class="small" style="margin-bottom:0.4rem;">
+    Grouped by job start date. Filters (division, status) can be layered in next iteration.
+  </div>
+  <ul class="list">
+    {% for day, jobs in grouped.items() %}
+    <li class="list-item">
+      <strong>{{ day }}</strong>
+      <ul class="list">
+        {% for j in jobs %}
+        <li class="list-item small">
+          <a href="{{ url_for('job_detail', job_id=j['id']) }}">
+            <span class="division-pill division-{{ j['division_class'] }}">
+              {{ j['division'] }} {{ j['job_number'] }}
+            </span>
+            &nbsp;{{ j['customer_name'] }} – {{ j['site_name'] }}
+          </a>
+          <span class="status-pill status-{{ j['status_class'] }}" style="margin-left:0.3rem;">
+            {{ j['status'] }}{% if j['has_attachments'] %} 📎{% endif %}
+          </span>
+        </li>
+        {% endfor %}
+      </ul>
+    </li>
+    {% else %}
+    <li class="list-item small">No demo jobs with dates.</li>
+    {% endfor %}
+  </ul>
+</section>
+{% endblock %}

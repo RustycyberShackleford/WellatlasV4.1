@@ -1,0 +1,39 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+  <div class="card-header">
+    <div class="card-title">{{ customer['name'] }}</div>
+  </div>
+  <div class="small">Demo customer record with {{ sites|length }} sites.</div>
+  <h3 class="section-title">Sites</h3>
+  <ul class="list">
+    {% for s in sites %}
+    <li class="list-item">
+      <a href="{{ url_for('site_detail', site_id=s['id']) }}">{{ s['name'] }}</a>
+      <span class="small"> · {{ s['job_count'] }} jobs</span>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+<section class="card">
+  <div class="card-header">
+    <div class="card-title">Recent Jobs</div>
+  </div>
+  <ul class="list">
+    {% for j in jobs %}
+    <li class="list-item">
+      <span class="division-pill division-{{ j['division_class'] }}">
+        {{ j['division'] }} {{ j['job_number'] }}
+      </span>
+      &nbsp;{{ j['site_name'] }}
+      <span class="status-pill status-{{ j['status_class'] }}" style="margin-left:0.3rem;">
+        {{ j['status'] }}{% if j['has_attachments'] %} 📎{% endif %}
+      </span>
+    </li>
+    {% else %}
+    <li class="list-item small">No recent jobs for this demo customer.</li>
+    {% endfor %}
+  </ul>
+</section>
+{% endblock %}

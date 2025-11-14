@@ -1,0 +1,52 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+  <div class="card-header">
+    <div class="card-title">Field Map · Willows → Cottonwood</div>
+  </div>
+  <div id="map" class="map-container"></div>
+  <div class="small" style="margin-top:0.4rem;">
+    Demo dataset: a few customers, multiple sites, and D/P/A/E jobs seeded across the Northstate corridor.
+  </div>
+</section>
+<section class="card">
+  <div class="card-header">
+    <div class="card-title">Today&apos;s Jobs (Demo)</div>
+  </div>
+  <ul class="list">
+    {% for job in todays_jobs %}
+    <li class="list-item">
+      <span class="division-pill division-{{ job['division_class'] }}">
+        {{ job['division'] }} {{ job['job_number'] }}
+      </span>
+      &nbsp;{{ job['customer_name'] }} &mdash; {{ job['site_name'] }}
+      <span class="status-pill status-{{ job['status_class'] }}" style="margin-left:0.4rem;">
+        {{ job['status'] }}{% if job['has_attachments'] %} 📎{% endif %}
+      </span>
+    </li>
+    {% else %}
+    <li class="list-item small">No demo jobs scheduled for today.</li>
+    {% endfor %}
+  </ul>
+</section>
+<script>
+  const map = L.map('map').setView([40.3, -122.2], 9);
+  L.tileLayer('https://api.maptiler.com/maps/hybrid/{z}/{x}/{y}.jpg?key={{ maptiler_key }}', {
+    maxZoom: 19,
+    attribution: '&copy; MapTiler &copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  const pins = {{ pins|tojson }};
+  pins.forEach(p => {
+    const marker = L.circleMarker([p.lat, p.lng], {
+      radius: 6,
+      fillOpacity: 0.9,
+      color: p.border,
+      weight: 2,
+      fillColor: p.fill
+    }).addTo(map);
+    marker.bindPopup(`<strong>${p.customer}</strong><br>${p.site}<br>${p.division_job}`);
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,36 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+  <div class="card-header">
+    <div class="card-title">{{ job['division'] }} {{ job['job_number'] }} · {{ customer['name'] }}</div>
+  </div>
+  <div class="small">
+    Site: <a href="{{ url_for('site_detail', site_id=site['id']) }}">{{ site['name'] }}</a><br>
+    Status: <span class="status-pill status-{{ job['status_class'] }}">{{ job['status'] }}</span><br>
+    Start: {{ job['start_date'] or '—' }} · End: {{ job['end_date'] or '—' }}
+  </div>
+  <h3 class="section-title">Job Notes</h3>
+  <div class="small">{{ job['notes'] }}</div>
+  <h3 class="section-title">Attachments</h3>
+  <ul class="list">
+    {% for a in attachments %}
+    <li class="list-item small">{{ a['type'].upper() }} · {{ a['filename'] }}</li>
+    {% else %}
+    <li class="list-item small">No attachments for this demo job.</li>
+    {% endfor %}
+  </ul>
+
+  {% if gantt %}
+  <h3 class="section-title">Job Timeline (Gantt)</h3>
+  <div class="gantt-container">
+    <div class="gantt-row">
+      <div class="gantt-label">{{ gantt.start }} → {{ gantt.end }}</div>
+      <div class="gantt-bar-wrap">
+        <div class="gantt-bar" style="width: {{ gantt.width }}%; margin-left: {{ gantt.offset }}%;"></div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,17 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section class="card" style="grid-column: 1 / -1;">
+  <div class="card-header">
+    <div class="card-title">Customers (Demo)</div>
+  </div>
+  <ul class="list">
+    {% for c in customers %}
+    <li class="list-item">
+      <a href="{{ url_for('customer_detail', customer_id=c['id']) }}">{{ c['name'] }}</a>
+      <span class="small"> · {{ c['site_count'] }} sites · {{ c['job_count'] }} jobs</span>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endblock %}

@@ -1,0 +1,30 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>WellAtlas V4 · Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  </head>
+  <body>
+    <div class="overlay">
+      <header class="header">
+        <div class="header-left">
+          <div class="header-title">WellAtlas V4</div>
+          <div class="header-subtitle">Scheduling &amp; Field Ops · Demo</div>
+        </div>
+        <nav class="nav-buttons">
+          <a href="{{ url_for('home') }}" class="nav-button">Home</a>
+          <a href="{{ url_for('customers') }}" class="nav-button">Customers</a>
+          <a href="{{ url_for('calendar_view') }}" class="nav-button">Calendar</a>
+        </nav>
+      </header>
+      <main class="layout-main">
+        {% block content %}{% endblock %}
+      </main>
+    </div>
+  </body>
+</html>
