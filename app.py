@@ -4,7 +4,7 @@ import sqlite3
 from datetime import date as _date
 from flask import Flask, render_template, g
 
-DB_PATH = os.path.join(os.path.dirname(__file__), "wellatlas_v5.db")
+DB_PATH = os.path.join(os.path.dirname(__file__), "wellatlas_v4Demo_Full.db")
 
 def get_db():
     if "db" not in g:
